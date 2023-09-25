@@ -1,0 +1,2 @@
+UNICODE_COMMON = yes
+UNICODE_ENABLE = yes

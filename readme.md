@@ -34,3 +34,41 @@ QMK is developed and maintained by Jack Humbert of OLKB with contributions from 
 ## Official Website
 
 [qmk.fm](https://qmk.fm) is the official website of QMK, where you can find links to this page, the documentation, and the keyboards supported by QMK.
+
+## Notes
+
+Update QMK home:
+
+```bash
+qmk config user.qmk_home=/home/florian/Entwicklung/qmk_firmware
+```
+
+Set default keyboard and keymap:
+
+```bash
+qmk config user.keyboard=0xcb/1337
+qmk config user.keymap=floriankraft
+```
+
+Create new keymap:
+
+```bash
+# With default keyboard and keymap set
+qmk new-keymap
+
+# Without defaults set
+qmk new-keymap -kb 0xcb/1337 -km floriankraft
+```
+
+Compile keymap:
+
+```bash
+# With default keyboard and keymap set
+qmk compile
+
+# Without defaults set
+qmk compile -kb 0xcb/1337 -km floriankraft
+```
+
+TODO:
+Wait for the weekend and somehow pull in updated code into my fork.
