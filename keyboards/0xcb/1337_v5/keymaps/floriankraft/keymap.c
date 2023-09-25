@@ -18,9 +18,13 @@ enum layer_names {
 };
 
 enum keycodes {
-  M2_KEY = SAFE_RANGE,
-  M3_KEY,
-  M4_KEY
+  // Modifier Keys
+  NEO_M2 = SAFE_RANGE,
+  NEO_M3,
+  NEO_M4,
+
+  // Dead Keys
+  NEO_CIRC
 };
 
 static bool is_m2_pressed = false;
@@ -28,22 +32,7 @@ static bool is_m3_pressed = false;
 static bool is_m4_pressed = false;
 static char last_key_pressed[6];
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case M2_KEY:
-      is_m2_pressed = record->event.pressed;
-      break;
-    case M3_KEY:
-      is_m3_pressed = record->event.pressed;
-      break;
-    case M4_KEY:
-      is_m4_pressed = record->event.pressed;
-      break;
-    default:
-      snprintf(last_key_pressed, sizeof(last_key_pressed), "%u", keycode);
-      return true;
-  }
-
+bool handle_modifier_key(void) {
   if (is_m2_pressed && !is_m3_pressed && !is_m4_pressed) {
     layer_on(_LAYER2);
     layer_off(_LAYER3);
@@ -84,14 +73,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return false;
 }
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case NEO_M2:
+      is_m2_pressed = record->event.pressed;
+      return handle_modifier_key();
+    case NEO_M3:
+      is_m3_pressed = record->event.pressed;
+      return handle_modifier_key();
+    case NEO_M4:
+      is_m4_pressed = record->event.pressed;
+      return handle_modifier_key();
+    default:
+      snprintf(last_key_pressed, sizeof(last_key_pressed), "%u", keycode);
+      return true;
+  }
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LAYER1] = LAYOUT(
 //┌────────────┬────────────╭────────────╮
-    UC_PREV,     UC_NEXT,     M4_KEY,
+    UC_PREV,     UC_NEXT,     NEO_M4,
 //├────────────┼────────────╰────────────╯
-    KC_PGUP,     KC_PGDN,     M3_KEY,
+    KC_PGUP,     KC_PGDN,     NEO_M3,
 //├────────────┼────────────┼────────────┤
-    DE_A,        DE_E,        M2_KEY
+    DE_A,        DE_E,        NEO_M2
 //└────────────┴────────────┴────────────┘
 ),
 [_LAYER2] = LAYOUT(
