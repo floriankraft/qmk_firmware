@@ -30,6 +30,8 @@ enum keycodes {
 static bool is_m2_pressed = false;
 static bool is_m3_pressed = false;
 static bool is_m4_pressed = false;
+static bool is_deadkey_waiting = false;
+static uint16_t current_deadkey;
 static char last_key_pressed[6];
 
 bool handle_modifier_key(void) {
@@ -75,6 +77,7 @@ bool handle_modifier_key(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    // Modifier Keys
     case NEO_M2:
       is_m2_pressed = record->event.pressed;
       return handle_modifier_key();
@@ -84,6 +87,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case NEO_M4:
       is_m4_pressed = record->event.pressed;
       return handle_modifier_key();
+
+    // Dead Keys
+    case NEO_CIRC:
+      current_deadkey = NEO_CIRC;
+      is_deadkey_waiting = true;
+      return false;
+    case DE_A:
+      if (is_deadkey_waiting) {
+        switch (current_deadkey) {
+          case NEO_CIRC:
+            send_unicode_string("â");
+            current_deadkey = 0;
+            is_deadkey_waiting = false;
+            return false;
+          default:
+            return true;
+        }
+      }
+
     default:
       snprintf(last_key_pressed, sizeof(last_key_pressed), "%u", keycode);
       return true;
@@ -93,9 +115,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LAYER1] = LAYOUT(
 //┌────────────┬────────────╭────────────╮
-    UC_PREV,     UC_NEXT,     NEO_M4,
+    XXXXXXX,     XXXXXXX,     NEO_M4,
 //├────────────┼────────────╰────────────╯
-    KC_PGUP,     KC_PGDN,     NEO_M3,
+    NEO_CIRC,    XXXXXXX,     NEO_M3,
 //├────────────┼────────────┼────────────┤
     DE_A,        DE_E,        NEO_M2
 //└────────────┴────────────┴────────────┘
