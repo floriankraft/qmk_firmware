@@ -59,8 +59,6 @@
 #define LOCKING_RESYNC_ENABLE
 
 #define OLED_DISPLAY_128X64
-#define OLED_FONT_END 223
-#define OLED_FONT_H "gfxfont.c"
 
 #define I2C_DRIVER I2CD1
 #define I2C1_SDA_PIN GP2

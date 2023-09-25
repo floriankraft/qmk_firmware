@@ -69,6 +69,3 @@ qmk compile
 # Without defaults set
 qmk compile -kb 0xcb/1337 -km floriankraft
 ```
-
-TODO:
-Wait for the weekend and somehow pull in updated code into my fork.
