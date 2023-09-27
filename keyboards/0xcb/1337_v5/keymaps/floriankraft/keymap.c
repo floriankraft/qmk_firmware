@@ -119,6 +119,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // OLED Features (see: https://docs.qmk.fm/#/feature_oled_driver)
 
 #ifdef OLED_ENABLE
+static char current_rgb[4];
 bool oled_task_user(void) {
     oled_write_P(PSTR("Layer: "), false);
 
@@ -145,8 +146,12 @@ bool oled_task_user(void) {
             oled_write_ln_P(PSTR("Undefined"), false);
     }
 
-    oled_write_P(PSTR("Last key: "), false);
+    oled_write_P(PSTR("Key: "), false);
     oled_write_ln_P(PSTR(last_key_pressed), false);
+
+    oled_write_P(PSTR("RGB: "), false);
+    snprintf(current_rgb, sizeof(current_rgb), "%2u", rgb_matrix_get_mode());
+    oled_write_ln_P(PSTR(current_rgb), false);
 
     return false;
 }
@@ -158,7 +163,7 @@ bool oled_task_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LAYER1] = LAYOUT(
 //┌────────────┬────────────╭────────────╮
-    RGB_TOG,     DB_TOGG,     NEO_M4,
+    RGB_TOG,     RGB_MOD,     NEO_M4,
 //├────────────┼────────────╰────────────╯
     NEO_CIRC,    XXXXXXX,     NEO_M3,
 //├────────────┼────────────┼────────────┤
@@ -203,7 +208,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [_LAYER6] = LAYOUT(
 //┌────────────┬────────────╭────────────╮
-    _______,     _______,     _______,
+    DB_TOGG,     _______,     _______,
 //├────────────┼────────────╰────────────╯
     _______,     _______,     _______,
 //├────────────┼────────────┼────────────┤
@@ -235,14 +240,31 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 uint32_t startup_time = 0;
 
 void keyboard_post_init_kb(void) {
-    // Enable RGB current limiter and wait for a bit before allowing RGB to continue
     setPinOutput(RGB_ENABLE_PIN);
     writePinHigh(RGB_ENABLE_PIN);
     wait_ms(20);
-
-    // Record the current time
-    startup_time = timer_read32();
-
-    // Offload to the user func
     keyboard_post_init_user();
+}
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    for (uint8_t i = led_min; i < led_max; i++) {
+        switch (get_highest_layer(layer_state)) {
+            case _LAYER2:
+                rgb_matrix_set_color(i, RGB_BLUE);
+                break;
+            case _LAYER3:
+                rgb_matrix_set_color(i, RGB_GREEN);
+                break;
+            case _LAYER4:
+                rgb_matrix_set_color(i, RGB_RED);
+                break;
+            case _LAYER5:
+                rgb_matrix_set_color(i, RGB_CYAN);
+                break;
+            case _LAYER6:
+                rgb_matrix_set_color(i, RGB_PURPLE);
+                break;
+        }
+    }
+    return false;
 }
