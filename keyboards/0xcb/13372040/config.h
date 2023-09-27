@@ -1,9 +1,26 @@
-// Copyright 2023 Conor Burns (@Conor-Burns)
-/* SPDX-License-Identifier: GPL-2.0-or-later */
+/*
+Copyright 2022 0xCB - Conor Burns (Conor-Burns)
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #pragma once
 
+#include "config_common.h"
+
 #define RGB_ENABLE_PIN 14
+#define RGB_DI_PIN GP25
+#define RGBLED_NUM 31
 #define DRIVER_LED_TOTAL 31
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255
 #define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_BREATHING
@@ -59,8 +76,10 @@
 #define LOCKING_RESYNC_ENABLE
 
 #define OLED_DISPLAY_128X64
+#define OLED_FONT_END 223
+#define OLED_FONT_H "gfxfont.c"
 
-#define I2C_DRIVER I2CD1
+#define I2C_DRIVER I2CD2
 #define I2C1_SDA_PIN GP2
 #define I2C1_SCL_PIN GP3
 

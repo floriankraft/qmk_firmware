@@ -3,7 +3,7 @@
 
 #include QMK_KEYBOARD_H
 #include "sendstring_german.h"
-#include <stdio.h>
+#include "print.h"
 
 #define RGB_STARTUP_DELAY_MS 200
 
@@ -32,7 +32,7 @@ static bool is_m3_pressed = false;
 static bool is_m4_pressed = false;
 static bool is_deadkey_waiting = false;
 static uint16_t current_deadkey;
-static char last_key_pressed[6];
+static char last_key_pressed[7];
 
 bool handle_modifier_key(void) {
   if (is_m2_pressed && !is_m3_pressed && !is_m4_pressed) {
@@ -76,6 +76,9 @@ bool handle_modifier_key(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  #ifdef CONSOLE_ENABLE
+      uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+  #endif 
   switch (keycode) {
     // Modifier Keys
     case NEO_M2:
@@ -107,7 +110,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
 
     default:
-      snprintf(last_key_pressed, sizeof(last_key_pressed), "%u", keycode);
+      snprintf(last_key_pressed, sizeof(last_key_pressed), "0x%04X", keycode);
       return true;
   }
 }
@@ -155,7 +158,7 @@ bool oled_task_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LAYER1] = LAYOUT(
 //┌────────────┬────────────╭────────────╮
-    XXXXXXX,     XXXXXXX,     NEO_M4,
+    RGB_TOG,     DB_TOGG,     NEO_M4,
 //├────────────┼────────────╰────────────╯
     NEO_CIRC,    XXXXXXX,     NEO_M3,
 //├────────────┼────────────┼────────────┤
@@ -213,16 +216,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ///////////////////////////////////////////////////////////////////////////////
 // ???
 
+// clang-format off
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [_LAYER1] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
-    [_LAYER2]  = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
-    [_LAYER3]  = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI)},
-    [_LAYER4]  = {ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)},
-    [_LAYER5]  = {ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)},
-    [_LAYER6]  = {ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)},
+    [_LAYER2] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
+    [_LAYER3] = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI)},
+    [_LAYER4] = {ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)},
+    [_LAYER5] = {ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)},
+    [_LAYER6] = {ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)}
 };
 #endif
+// clang-format on
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (host_keyboard_led_state().caps_lock) {
