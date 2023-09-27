@@ -214,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 ///////////////////////////////////////////////////////////////////////////////
-// ???
+// Rotary Switch
 
 // clang-format off
 #if defined(ENCODER_MAP_ENABLE)
@@ -229,15 +229,20 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 #endif
 // clang-format on
 
-bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    if (host_keyboard_led_state().caps_lock) {
-        for (uint8_t i = led_min; i <= led_max; i++) {
-            if (g_led_config.flags[i] & LED_FLAG_UNDERGLOW) {
-                rgb_matrix_set_color(i, RGB_RED);
-            }
-        }
-    }
-    return true;
-}
+///////////////////////////////////////////////////////////////////////////////
+// RGB Lights
 
-uint16_t startup_timer;
+uint32_t startup_time = 0;
+
+void keyboard_post_init_kb(void) {
+    // Enable RGB current limiter and wait for a bit before allowing RGB to continue
+    setPinOutput(RGB_ENABLE_PIN);
+    writePinHigh(RGB_ENABLE_PIN);
+    wait_ms(20);
+
+    // Record the current time
+    startup_time = timer_read32();
+
+    // Offload to the user func
+    keyboard_post_init_user();
+}
