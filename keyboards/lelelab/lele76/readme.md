@@ -2,7 +2,7 @@
 
 ![lelelab/lele76](imgur.com image replace me!)
 
-This sourcecode is my attempt to create a working firmware for the LeleLab Y2K. The original sourcecode is outdated / working with an unknown previous version of QMK. As long as the developer of the original sourcecode does not open his work to the public these files can be taken as a reference to create a custom version of the firmware.
+This sourcecode is my attempt to create a working firmware for the LeleLab Y2K. The original sourcecode is outdated / working with an unknown previous version of QMK. As long as the developer of the original sourcecode does not open his work to the public these files can be taken as a starting point to create a custom version of the firmware.
 
 -   Keyboard Maintainer: [LeleLab](https://www.lelelab.work/)
 -   Hardware Supported: Currently unknown
