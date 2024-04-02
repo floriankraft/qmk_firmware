@@ -24,12 +24,25 @@
 **Folder lele76_orig**
 
 -   Another set of sources, also obtained through the LeleLab Discord channel.
+-   Nothing changed from my side.
 -   No plans for that right now.
 
 ## How to Build
 
+## Useful commands
+
 Replace the following parameters with the actual keyboard and keymap path.
+
+**Build**
 
 ```bash
 qmk compile -kb lelelab/lele76 -km default
+```
+
+**Keymap Overview**
+
+Show keymap as defined in info.json.
+
+```bash
+qmk info -kb lelelab/lele76 -km default -l
 ```
