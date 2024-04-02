@@ -49,8 +49,8 @@ qmk info -kb lelelab/lele76 -km default -l
 Set default keyboard and keymap:
 
 ```bash
-qmk config user.keyboard=0xcb/1337
-qmk config user.keymap=floriankraft
+qmk config user.keyboard=lelelab/lele76
+qmk config user.keymap=default
 ```
 
 After this `qmk compile` is enough to build the sourcecode.
