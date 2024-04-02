@@ -1,7 +1,7 @@
 {
     "manufacturer": "LeleLab",
     "keyboard_name": "Lele76",
-    "maintainer": "Florian Kraft",
+    "maintainer": "LeleLab",
     "bootloader": "usbasploader",
     "diode_direction": "COL2ROW",
     "features": {
