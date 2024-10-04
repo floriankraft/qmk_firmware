@@ -7,6 +7,11 @@ enum layer_names {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    // Parameters of different LAYOUT functions are defined in info.json at "layouts.<LAYOUTNAME>.layout".
+    // One line like this
+    //          { "label": "↻", "matrix": [0, 0], "x": 0, "y": 0 }
+    // represents one keycode here.
+    // The order of parameters is very important as each keycode will be mapped to the given matrix coordinates.
     [_LAYER1] = LAYOUT(
         KC_NO,
         KC_ESC,KC_GRAVE,KC_1,KC_2,KC_3,KC_4,KC_5,KC_6,KC_7,KC_8,KC_9,KC_0,KC_MINUS,KC_EQUAL,KC_BSPC,KC_PGUP,

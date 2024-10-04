@@ -7,6 +7,12 @@
 -   What is working?
     -   Key Matrix
     -   OLED Display
+-   What is not working?
+    -   Per-Key RGB Lighting
+    -   Temperature Sensor
+    -   Humidity Sensor
+    -   USB Hub
+    -   Rotary Encoder
 
 ## Folder lele76_orig
 
