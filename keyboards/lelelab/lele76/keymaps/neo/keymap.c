@@ -2,7 +2,7 @@
 #include "sendstring_german.h"
 #include "stdio.h"
 
-enum layer_names { _LAYER1, _LAYER2, _LAYER3, _LAYER4, _LAYER5, _LAYER6 };
+enum layer_names { _LAYER1, _LAYER2, _LAYER3, _LAYER4 };
 // clang-format off
 enum keycodes {
     NEO_M2 = SAFE_RANGE, NEO_M3, NEO_M4,
@@ -20,38 +20,18 @@ bool handle_modifier_key(void) {
         layer_on(_LAYER2);
         layer_off(_LAYER3);
         layer_off(_LAYER4);
-        layer_off(_LAYER5);
-        layer_off(_LAYER6);
     } else if (!is_m2_pressed && is_m3_pressed && !is_m4_pressed) {
         layer_off(_LAYER2);
         layer_on(_LAYER3);
         layer_off(_LAYER4);
-        layer_off(_LAYER5);
-        layer_off(_LAYER6);
     } else if (!is_m2_pressed && !is_m3_pressed && is_m4_pressed) {
         layer_off(_LAYER2);
         layer_off(_LAYER3);
         layer_on(_LAYER4);
-        layer_off(_LAYER5);
-        layer_off(_LAYER6);
-    } else if (is_m2_pressed && is_m3_pressed && !is_m4_pressed) {
-        layer_off(_LAYER2);
-        layer_off(_LAYER3);
-        layer_off(_LAYER4);
-        layer_on(_LAYER5);
-        layer_off(_LAYER6);
-    } else if (is_m2_pressed && !is_m3_pressed && is_m4_pressed) {
-        layer_off(_LAYER2);
-        layer_off(_LAYER3);
-        layer_off(_LAYER4);
-        layer_off(_LAYER5);
-        layer_on(_LAYER6);
     } else {
         layer_off(_LAYER2);
         layer_off(_LAYER3);
         layer_off(_LAYER4);
-        layer_off(_LAYER5);
-        layer_off(_LAYER6);
     }
     return false;
 }
@@ -103,17 +83,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LAYER1] = LAYOUT(
 //╔═══════╗
-   KC_NO,
+   KC_MUTE,
 //╠═══════╣╔═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═════════════════╦═══════╗
-   KC_ESC,  DE_CIRC, DE_1,   DE_2,   DE_3,   DE_4,   DE_5,   DE_6,   DE_7,   DE_8,   DE_9,   DE_0,  DE_MINS, DE_GRV,     KC_BSPC,     KC_HOME,
+   KC_ESC,  DE_CIRC, DE_1,   DE_2,   DE_3,   DE_4,   DE_5,   DE_6,   DE_7,   DE_8,   DE_9,   DE_0,  DE_MINS, DE_GRV,     KC_BSPC,     KC_DEL,
 //╠═══════╣╠═══════╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═════════════╬═══════╣
-   KC_DEL,    KC_TAB,    DE_X,   DE_V,   DE_L,   DE_C,   DE_W,   DE_K,   DE_H,   DE_G,   DE_F,   DE_Q,   DE_SS, DE_ACUT,   NEO_M3,    KC_PGUP,
+   KC_PSCR,    KC_TAB,    DE_X,   DE_V,   DE_L,   DE_C,   DE_W,   DE_K,   DE_H,   DE_G,   DE_F,   DE_Q,   DE_SS, DE_ACUT, MO(_LAYER3),C(LSFT(DE_M)),
 //╠═══════╣╠═══════════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═════════════╬═══════╣
-   KC_INS,      NEO_M3,    DE_U,   DE_I,   DE_A,   DE_E,   DE_O,   DE_S,   DE_N,   DE_R,   DE_T,   DE_D,   DE_Y,        KC_ENT,       KC_PGDN,
+   KC_HOME,  MO(_LAYER3),  DE_U,   DE_I,   DE_A,   DE_E,   DE_O,   DE_S,   DE_N,   DE_R,   DE_T,   DE_D,   DE_Y,        KC_ENT,       KC_PGUP,
 //╠═══════╣╠═════════════╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══════════╦═══════╬═══════╣
-   KC_PSCR,       NEO_M2,     DE_UDIA,DE_ODIA,DE_ADIA, DE_P,   DE_Z,   DE_B,   DE_M,  DE_COMM,DE_DOT,  DE_J,      NEO_M2,      KC_UP, KC_END,
+   KC_END,    MO(_LAYER2),   DE_UDIA,DE_ODIA,DE_ADIA, DE_P,   DE_Z,   DE_B,   DE_M,  DE_COMM,DE_DOT,  DE_J,     MO(_LAYER2),   KC_UP, KC_PGDN,
 //╠═══════╣╠═══════╦═══════╦═╩═════╦═╩═══════╩═══════╩═══════╩═══════╩═══════╩═══════╩═════╦═╩═══════╩═╦═════╩═══════╦═══════╬═══════╬═══════╣
-   NEO_M4,  KC_LCTL,KC_LCMD,KC_LALT,                       KC_SPACE,                          NEO_M4,      KC_RCTL,   KC_LEFT,KC_DOWN,KC_RGHT
+MO(_LAYER4),KC_LCTL,KC_LCMD,KC_LALT,                       KC_SPACE,                        MO(_LAYER4),   KC_RCTL,   KC_LEFT,KC_DOWN,KC_RGHT
 //╚═══════╝╚═══════╩═══════╩═══════╩═══════════════════════════════════════════════════════╩═══════════╩═════════════╩═══════╩═══════╩═══════╝
 ),
 
@@ -153,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //╔═══════╗
    _______,
 //╠═══════╣╔═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═════════════════╦═══════╗
-   _______,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_TAB,DE_SLSH,DE_ASTR,DE_MINS, KC_NO,      _______,     _______,
+   _______,  KC_NO,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10, KC_F11, KC_F12,     _______,     _______,
 //╠═══════╣╠═══════╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═══╩═══╦═════════════╬═══════╣
    _______,   _______,  KC_PGUP,KC_BSPC, KC_UP,  KC_DEL,KC_PGDN, KC_NO,  DE_7,   DE_8,   DE_9,  DE_PLUS,_______, KC_NO,    _______,   _______,
 //╠═══════╣╠═══════════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═╦═════╩═════════════╬═══════╣
@@ -200,18 +180,10 @@ bool oled_task_user() {
         case _LAYER4:
             oled_write_P(PSTR("M4 (Control)\n"), false);
             break;
-        case _LAYER5:
-            oled_write_P(PSTR("M5 (Greek)\n"), false);
-            break;
-        case _LAYER6:
-            oled_write_P(PSTR("M6 (Science)\n"), false);
-            break;
         default:
             oled_write_ln_P(PSTR("Undefined"), false);
     }
 
-    // oled_write_P(PSTR("Key: "), false);
-    // oled_write_ln_P(PSTR(last_key_pressed), false);
     return false;
 }
 #endif
