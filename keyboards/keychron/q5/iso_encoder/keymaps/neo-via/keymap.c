@@ -30,8 +30,7 @@ enum layers{
 
 enum keycodes {
     NEO_GRV = SAFE_RANGE,
-    NEO_BTK,
-    NEO_EUR
+    NEO_BTK
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -63,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,    DE_X,      DE_V,      DE_L,      DE_C,      DE_W,      DE_K,      DE_H,      DE_G,      DE_F,      DE_Q,      DE_SS,     DE_ACUT,                         KC_P7,     KC_P8,     KC_P9,
     MO(WIN_L3),DE_U,      DE_I,      DE_A,      DE_E,      DE_O,      DE_S,      DE_N,      DE_R,      DE_T,      DE_D,      DE_Y,      MO(WIN_L3),KC_ENT,               KC_P4,     KC_P5,     KC_P6,     KC_PPLS,
 LM(WIN_L2,MOD_LSFT),MO(WIN_L4),DE_UDIA,DE_ODIA, DE_ADIA,   DE_P,      DE_Z,      DE_B,      DE_M,      DE_COMM,   DE_DOT,    DE_J,      LM(WIN_L2,MOD_RSFT),  KC_UP,     KC_P1,     KC_P2,     KC_P3,
-    KC_LCTL,   KC_LWIN,   KC_LALT,                                    KC_SPC,                                     MO(WIN_L4),KC_RALT,   KC_RCTL,   KC_LEFT,   KC_DOWN,   KC_RGHT,   KC_P0,     KC_PDOT,   KC_PENT),
+    KC_LCTL,   KC_LWIN,   KC_LALT,                                    KC_SPC,                                     MO(WIN_L4),KC_PGUP,   KC_PGDN,   KC_LEFT,   KC_DOWN,   KC_RGHT,   KC_P0,     KC_PDOT,   KC_PENT),
 [WIN_L2] = LAYOUT_iso_99(
     _______,              _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,              _______,   _______,   _______,   _______,
     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_NO,     _______,              _______,   _______,   _______,   _______,
@@ -80,7 +79,7 @@ LM(WIN_L2,MOD_LSFT),MO(WIN_L4),DE_UDIA,DE_ODIA, DE_ADIA,   DE_P,      DE_Z,     
     _______,   _______,   _______,                                    _______,                                    _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______),
 [WIN_L4] = LAYOUT_iso_99(
     _______,              _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,              _______,   _______,   _______,   _______,
-    _______,   _______,   _______,   _______,   _______,   _______,   _______,   KC_NUM,    KC_PSLS,   KC_PAST,   KC_PMNS,   _______,   _______,   _______,              _______,   _______,   _______,   _______,
+_______,C(LSFT(DE_M)),C(LSFT(DE_O)),C(LSFT(DE_K)),C(LSFT(DE_H)),KC_NO,KC_NO,     KC_NUM,    KC_PSLS,   KC_PAST,   KC_PMNS,   _______,   _______,   _______,              _______,   _______,   _______,   _______,
     _______,   KC_PGUP,   KC_BSPC,   KC_UP,     KC_DEL,    KC_PGDN,   KC_NO,     KC_P7,     KC_P8,     KC_P9,     KC_PPLS,   _______,   _______,                         _______,   _______,   _______,
     _______,   KC_HOME,   KC_LEFT,   KC_DOWN,   KC_RGHT,   KC_END,    KC_NO,     KC_P4,     KC_P5,     KC_P6,     KC_PDOT,   _______,   _______,   _______,              _______,   _______,   _______,   _______,
     _______,   _______,   KC_ESC,    KC_TAB,    C(DE_V),   KC_ENT,    C(DE_Z),   KC_NO,     KC_P1,     KC_P2,     KC_P3,     KC_PENT,   _______,              _______,   _______,   _______,   _______,
@@ -91,6 +90,7 @@ LM(WIN_L2,MOD_LSFT),MO(WIN_L4),DE_UDIA,DE_ODIA, DE_ADIA,   DE_P,      DE_Z,     
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [MAC_BASE] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [MAC_FN]   = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
+
     [WIN_L1]   = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [WIN_L2]   = {ENCODER_CCW_CW(KC_BRID, KC_BRIU) },
     [WIN_L3]   = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
@@ -108,11 +108,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case NEO_BTK:
             if (record->event.pressed) {
                 SEND_STRING("`");
-            }
-            return false;
-        case NEO_EUR:
-            if (record->event.pressed) {
-                SEND_STRING("€");
             }
             return false;
         default:
